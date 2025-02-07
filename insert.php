@@ -22,24 +22,11 @@ $pdo = null; //zatvaranje konekcije
 ?>
 
 
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Insert books</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="bootstrap-5.3.3-dist/css/bootstrap.css">
-
-</head>
-<body>
+<?php require "views/partials/header.php"?>
+<?php require "views/partials/nav.php"?>
+<main>
         <div class="container">
-            <a href="show.php">Books</a>
-            <a href="insert.php">Insert book</a>
-            <a href="delete.php">Delete book</a>
-            <a href="edit.php">Edit books</a>
+
 
             <h2>Insert book</h2>
 
@@ -89,8 +76,9 @@ $pdo = null; //zatvaranje konekcije
 
             </form>
         </div>
-
+</main>
         <script src="bootstrap-5.3.3-dist/js/bootstrap.js"></script>
         <script src="insert.js"></script>
-</body>
-</html>
+
+
+<?php require "views/partials/footer.php"?>
