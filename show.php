@@ -15,25 +15,13 @@ $pdo = null; //zatvaranje konekcije
 
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Books table</title>
-    <link rel="stylesheet" href="style.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-</head>
-<body>
+<?php require "views/partials/header.php"?>
+<?php require "views/partials/nav.php"?>
+
+<main>
 
     <div class="container">
 
-        <a href="show.php">Books</a>
-        <a href="insert.php">Insert book</a>
-        <a href="delete.php">Delete book</a>
-        <a href="edit.php">Edit books</a>
-        
         <h2>Books in Library</h2>
 
         <br>
@@ -70,5 +58,7 @@ $pdo = null; //zatvaranje konekcije
 
     </div>
 
-</body>
-</html>
+</main>
+
+
+<?php require "views/partials/footer.php"?>
