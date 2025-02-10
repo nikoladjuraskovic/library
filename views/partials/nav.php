@@ -31,11 +31,17 @@ if(isset($_SESSION['username'])){
 
     </div>
 
-    <div>
-        <a href="login.php">Login</a>
-        <a href="register.php">Register</a>
+    <div> <!--Za ulogovane korisnike prikazujemo samo login stranicu, za izlogovane login i register-->
+        <?php if(isset($_SESSION['username'])) { ?>
+            <a href="logout.php">Log out</a>
+        <?php }else {  ?>
+            <a href="login.php">Login</a>
+            <a href="register.php">Register</a>
+        <?php } ?>
+
         <a href="loginTest.php">Login Test</a>
-        <a href="logout.php">Log out</a>
+
+
     </div>
 
     </div>
