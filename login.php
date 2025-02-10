@@ -20,6 +20,10 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
         //proveri da li je tacna sifra
         if(password_verify($password, $data['password']))
         {
+            session_start();
+            $_SESSION['username'] = $username;
+            $_SESSION['role'] = $data['role'];
+
             echo "User " . htmlspecialchars($data['username']) . " is logged in. Welcome back!";
         } else{
             echo "Wrong password! Try again!";
