@@ -17,7 +17,7 @@ if(isset($_SESSION['username'])){
 <main>
     <div class="container">
 
-        <h2>Welcome, <?= $username ?? "nobody" ?></h2>
+        <h2>Welcome, <?= $username ?? "guest" ?></h2>
     </div>
 </main>
 

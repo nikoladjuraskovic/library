@@ -20,7 +20,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
         //proveri da li je tacna sifra
         if(password_verify($password, $data['password']))
         {
+            ini_set('session.gc_maxlifetime', (60*60*24)); //duzina trajanja sesije je 1 dan
             session_start();
+
             $_SESSION['username'] = $username;
             $_SESSION['role'] = $data['role'];
 

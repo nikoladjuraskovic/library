@@ -17,6 +17,7 @@
         <a href="login.php">Login</a>
         <a href="register.php">Register</a>
         <a href="loginTest.php">Login Test</a>
+        <a href="logout.php">Log out</a>
     </div>
 
     </div>
