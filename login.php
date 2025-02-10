@@ -25,8 +25,10 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
 
             $_SESSION['username'] = $username;
             $_SESSION['role'] = $data['role'];
+            $_SESSION['IP'] = $_SERVER['REMOTE_ADDR'] ?? $_SERVER["HTTP_USER_AGENT"];
 
             echo "User " . htmlspecialchars($data['username']) . " is logged in. Welcome back!";
+            
         } else{
             echo "Wrong password! Try again!";
 
