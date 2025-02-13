@@ -25,15 +25,20 @@ if(isset($_SESSION['username'])){
     <div>
 
         <a href="show.php">Books</a>
-        <a href="insert.php">Insert book</a>
-        <a href="delete.php">Delete book</a>
-        <a href="edit.php">Edit books</a>
+        <?php if(isset($_SESSION['username']) && $_SESSION['role'] === 'admin'){ ?>
+            <a href="insert.php">Insert book</a>
+            <a href="delete.php">Delete book</a>
+            <a href="edit.php">Edit books</a>
+        <?php } ?>
 
     </div>
 
     <div> <!--Za ulogovane korisnike prikazujemo samo login stranicu, za izlogovane login i register-->
         <?php if(isset($_SESSION['username'])) { ?>
+            <a href="showAvailable.php">Rent a book</a>
+            <a href="rentsUser.php">Book rents</a>
             <a href="logout.php">Log out</a>
+
         <?php }else {  ?>
             <a href="login.php">Login</a>
             <a href="register.php">Register</a>

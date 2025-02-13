@@ -19,19 +19,18 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     echo "User registered successfully!";
 
     $pdo = null;
-
-
     /*
+     *
+     * Administrator
+     * user: admin
+     * password: admin
+     *
      * user: user
      * password: 12345
      * */
 }
 
-
-
-
 ?>
-
 
 <?php require "views/partials/header.php"?>
 <?php require "views/partials/nav.php"?>
