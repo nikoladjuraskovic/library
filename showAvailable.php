@@ -17,7 +17,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     $userID = $_SESSION["id"]; // citamo koji je to korisnik
 
     //ako knjiga nije odobrena onda kazemo da je vracena, iako nikad nije ni data
-    $sql = "INSERT INTO rents (BookID, UserID, Approved, Returned) VALUES (:bookID, :userID, 'no', 'yes')";
+    $sql = "INSERT INTO rents (BookID, UserID, Approved, Returned) VALUES (:bookID, :userID, 'pending', '-')";
     $stmt = $pdo->prepare($sql);
     $stmt->execute(["bookID" => $bookID, "userID" => $userID]); // ubacimo zahvtev za knjigu
 

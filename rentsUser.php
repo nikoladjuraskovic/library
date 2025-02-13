@@ -46,7 +46,7 @@ $stmt2->execute(['userID' => $userID]);
                 while($row = $stmt2->fetch()) { ?>
                     <tr>
                         <td><?php
-
+                            //TODO prebaciti u backend deo gore
                             $bookSql = "SELECT * FROM books WHERE BookID = :bookID";
                             $stmt = $pdo->prepare($bookSql);
                             $stmt->execute(['bookID' => $row['BookID']]);

@@ -29,6 +29,7 @@ if(isset($_SESSION['username'])){
             <a href="insert.php">Insert book</a>
             <a href="delete.php">Delete book</a>
             <a href="edit.php">Edit books</a>
+            <a href="rentsAdmin.php">Approve rents</a>
         <?php } ?>
 
     </div>
