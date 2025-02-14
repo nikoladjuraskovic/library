@@ -17,6 +17,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 
     $clickedButton = $_POST['button'];
     $rentID = $_POST['rentID']; // dohvatamo da vidimo koja je renta u pitanju
+    $bookID = $_POST['bookID']; // dohvatamo koju knjigu odobravamo/odbijamo za rentu
 
     if($clickedButton == "Approve"){
         echo 'Approved';
@@ -26,14 +27,23 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
          * 2. Promeniti Approved u yes u rent tabeli i Returned u no
          *
          * */
+        $sql3 = "UPDATE books SET Amount = Amount - 1 WHERE BookID = :bookID";
+        $stmt5 = $pdo->prepare($sql3);
+        $stmt5->execute(array('bookID' => $bookID));
+
+        $sql2 = "UPDATE rents SET Approved = 'Approved' WHERE rentID = :rentID";
+        $stmt4 = $pdo->prepare($sql2);
+        $stmt4->execute(array(':rentID' => $rentID));
 
     } else if($clickedButton == "Decline"){
         echo 'Declined';
         /*
-         * Ako je renta odbije,a to znaci da treba u bazi promeniti:
+         * Ako se renta odbije,a to znaci da treba u bazi promeniti:
          * 1. Approved u tabeli rent staviti na no i returned ostaviti na -
          * */
-
+        $sql = "UPDATE rents SET Approved = 'Declined' WHERE rentID = :rentID";
+        $stmt3 = $pdo->prepare($sql);
+        $stmt3->execute([':rentID' => $rentID]);
     }
 }
 
@@ -110,6 +120,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                                     &emsp;
                                     <input type="submit" value="Decline" name="button" class="btn btn-outline-danger">
                                     <input type="hidden" value="<?=$row['RentID']?>" name="rentID">
+                                    <input type="hidden" value="<?=$row['BookID']?>" name="bookID">
                                 </div>
                             </form>
                         </td>
