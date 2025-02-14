@@ -3,15 +3,17 @@
 
 //Ako se nismo ulogovali tj. podesili sesiju, zapocni je, ovo je zbog login.php da ne bi 2x
 //zapocinjali sesiju i da bi username i role mogli da se prikazu na svakoj stranici
+/*
 if(!isset($_SESSION))
     session_start();
-
+*/
 //ako je podeseno username, to znaci da smo ulogovani na tekucoj stranici i ispisi username i role
+/*
 if(isset($_SESSION['username'])){
     $usernameNav = $_SESSION['username'];
     $roleNav = $_SESSION['role'];
 }
-
+*/
 
 ?>
 

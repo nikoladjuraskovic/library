@@ -1,10 +1,13 @@
 <?php
 
+/*
 session_start();
 
 if(isset($_SESSION['username'])){
     $username = $_SESSION['username'];
 }
+*/
+require "config.php";
 
 
 ?>
@@ -17,7 +20,8 @@ if(isset($_SESSION['username'])){
 <main>
     <div class="container">
 
-        <h2>Welcome, <?= $username ?? "guest" ?></h2>
+        <h2>Welcome, <?= $usernameNav ?? "guest" ?></h2>
+        <h2>Role: <?= $roleNav ?? "Anonymous" ?></h2>
     </div>
 </main>
 

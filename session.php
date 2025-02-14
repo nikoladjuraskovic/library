@@ -1,5 +1,6 @@
 <?php
 
+/*
 session_start();
 
 $_SESSION['user'] = 'nikola';
@@ -15,7 +16,7 @@ echo "SESSION ID: ". $session_id;
 
 
 session_destroy();
-
+*/
 ?>
 
 

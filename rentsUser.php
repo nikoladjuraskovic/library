@@ -2,7 +2,7 @@
 
 require "config.php";
 
-session_start();
+//session_start();
 
 
 $stmt = $pdo->query("SELECT 1 FROM rents");

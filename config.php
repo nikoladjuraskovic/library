@@ -1,4 +1,14 @@
 <?php
+
+//TODO Mozda ovde staviti session_start();  ???
+ini_set('session.gc_maxlifetime', (60 * 60 * 24)); //duzina trajanja sesije je 1 dan
+session_start();
+if(isset($_SESSION['username'])){
+    $usernameNav = $_SESSION['username'];
+    $roleNav = $_SESSION['role'];
+}
+
+
 $host = 'localhost'; //127.0.0.1
 $db = 'library';
 $user = 'root';
@@ -15,4 +25,4 @@ $options = [
 ];
 $pdo = new PDO($dsn, $user, $pass, $options);
 
-//TODO Mozda ovde staviti session_start();  ???
+

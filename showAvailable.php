@@ -3,7 +3,7 @@
 require "config.php";
 
 
-session_start(); //ne vidi $_SESSION ako ne stavim ovo.....
+//session_start(); //ne vidi $_SESSION ako ne stavim ovo.....
 
 $stmt = $pdo->query("SELECT 1 FROM Books");
 
