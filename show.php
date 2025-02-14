@@ -35,6 +35,7 @@ $pdo = null; //zatvaranje konekcije
                 <td>Title</td>
                 <td>Author</td>
                 <td>Year</td>
+                <td>Amount</td>
 
             </tr>
             <?php
@@ -43,6 +44,7 @@ $pdo = null; //zatvaranje konekcije
                         <td><?= $row['Title']?></td>
                         <td><?= $row['Author']?></td>
                         <td><?= $row['Year']?></td>
+                        <td><?= $row['Amount']?></td>
                     </tr>
                     
             <?php

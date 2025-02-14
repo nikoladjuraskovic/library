@@ -32,6 +32,7 @@ $pdo = null;
                         <th>Title</th>
                         <th>Author</th>
                         <th>Year</th>
+                        <th>Amount</th>
                     </tr>
 
                     <?php
@@ -41,6 +42,7 @@ $pdo = null;
                         <td><?= $row['Title'] ?></td>
                         <td><?= $row['Author'] ?></td>
                         <td><?= $row['Year'] ?></td>
+                        <td><?= $row['Amount'] ?></td>
                         <td>
                             <form action="editBook.php" method="post">
                                 <input type="hidden" value="<?= $row['BookID'] ?>" name="id" id="id" >

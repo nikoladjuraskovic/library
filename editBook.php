@@ -36,9 +36,10 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
         $bookTitle = $_POST["Title"];
         $bookAuthor = $_POST["Author"];
         $bookYear = $_POST["Year"];
+        $amount = $_POST["Amount"];
 
-        $stmt = $pdo->prepare("UPDATE books SET Title = :Title, Author = :Author, Year = :Year WHERE bookID = :bookID");
-        $stmt->execute(["bookID" => $bookID, "Title" => $bookTitle, "Author" => $bookAuthor, "Year" => $bookYear]);
+        $stmt = $pdo->prepare("UPDATE books SET Title = :Title, Author = :Author, Year = :Year, Amount = :Amount WHERE bookID = :bookID");
+        $stmt->execute(["bookID" => $bookID, "Title" => $bookTitle, "Author" => $bookAuthor, "Year" => $bookYear, "Amount" => $amount]);
 
 
         $pdo = null;
@@ -85,6 +86,11 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
                 <div class="form-group">
                     <label for="Year">Year:</label>
                     <input type="number" value="<?= $row["Year"] ?>" name="Year" id="Year" class="form-control" required>
+                </div>
+                <br>
+                <div class="form-group">
+                    <label for="Amount">Amount:</label>
+                    <input type="number" value="<?= $row["Amount"] ?>" name="Amount" id="Amount" class="form-control" required>
                 </div>
                 <br>
                 <div class="form-group">

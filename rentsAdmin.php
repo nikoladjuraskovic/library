@@ -114,6 +114,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                         </td>
                         <td>
                             <!--forma za prihvatanje/odbijanje rente-->
+                            <?php if($row["Returned"] !== "Returned"){  ?>
                             <form action="rentsAdmin.php" method="post">
                                 <div style="display: flex">
                                     <input type="submit" value="Approve" name="button" class="btn btn-outline-success">
@@ -123,6 +124,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                                     <input type="hidden" value="<?=$row['BookID']?>" name="bookID">
                                 </div>
                             </form>
+                            <?php } else { ?>
+                            Book returned
+                            <?php } ?>
                         </td>
                     </tr>
 

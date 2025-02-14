@@ -56,7 +56,11 @@ $pdo = null; //zatvaranje konekcije
 
                 </tr>
                 <?php
-                while($row = $stmt2->fetch()) { ?>
+                while($row = $stmt2->fetch()) {
+
+                    if($row['Amount'] > 0) {
+                    //samo ako ima knjiga za rentu, onda ih prikazi
+                    ?>
                     <tr>
                         <td><?= $row['Title']?></td>
                         <td><?= $row['Author']?></td>
@@ -72,6 +76,7 @@ $pdo = null; //zatvaranje konekcije
                     </tr>
 
                     <?php
+                    }
                 }
             } else{
                 ?>
