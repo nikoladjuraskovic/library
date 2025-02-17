@@ -77,8 +77,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                             $stmt->execute(['bookID' => $row['BookID']]);
                             $bookData = $stmt->fetch();
                             echo $bookData['Title'];
-
-
                             ?>
                         </td>
                         <td><?= $bookData['Author']?></td>

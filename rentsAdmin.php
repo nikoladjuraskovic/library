@@ -2,7 +2,7 @@
 
 require "config.php";
 
-//session_start();
+
 
 
 $stmt = $pdo->query("SELECT 1 FROM rents");
@@ -19,12 +19,14 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     $rentID = $_POST['rentID']; // dohvatamo da vidimo koja je renta u pitanju
     $bookID = $_POST['bookID']; // dohvatamo koju knjigu odobravamo/odbijamo za rentu
 
+    //check which button in the form was clicked
     if($clickedButton == "Approve"){
         echo 'Approved';
         /*
          * Ako je renta odobrena, to znaci da treba u bazi promeniti:
-         * 1. Amount u Books tabeli za tu knjigu smanjiti za 1 i izvrsiti proveru da li moze da ne ode u negativni broj
-         * 2. Promeniti Approved u yes u rent tabeli i Returned u no
+         * 1. Amount u Books tabeli za tu knjigu smanjiti za 1. User ne moze rentirati knjigu ako ih nema dovoljno, to je
+         * reseno u showAvailable.php stranici.
+         * 2. Promeniti Approved u Approved u rent tabeli, Returned ostaje -
          *
          * */
         $sql3 = "UPDATE books SET Amount = Amount - 1 WHERE BookID = :bookID";
@@ -39,7 +41,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         echo 'Declined';
         /*
          * Ako se renta odbije,a to znaci da treba u bazi promeniti:
-         * 1. Approved u tabeli rent staviti na no i returned ostaviti na -
+         * 1. Approved u tabeli rent staviti na Declined i returned ostaviti na -
          * */
         $sql = "UPDATE rents SET Approved = 'Declined' WHERE rentID = :rentID";
         $stmt3 = $pdo->prepare($sql);
@@ -75,12 +77,13 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                 ?>
 
                 <tr>
-                    <td>Title</td>
-                    <td>Author</td>
-                    <td>Approval</td>
-                    <td>Returned</td>
-                    <td>Available book copies</td>
-                    <td>User</td>
+                    <th>Title</th>
+                    <th>Author</th>
+                    <th>Approval</th>
+                    <th>Returned</th>
+                    <th>Available book copies</th>
+                    <th>User</th>
+                    <th>Status</th>
 
                 </tr>
                 <?php
@@ -93,40 +96,44 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                             $stmt->execute(['bookID' => $row['BookID']]);
                             $bookData = $stmt->fetch();
                             echo $bookData['Title'];
-
-
                             ?>
                         </td>
                         <td><?= $bookData['Author']?></td>
                         <td><?= $row['Approved']?></td>
-                        <td><?= $row['Returned']?></td>
+                        <!--Mark red to admin if a book is approved and not returned yet-->
+                        <?php if($row['Approved'] === 'Approved' && $row['Returned'] === '-') : ?>
+                            <td style="color:red">NOT Returned</td>
+                        <?php else : ?> <!--otherwise, print from database-->
+                            <td><?= $row['Returned']?></td>
+                        <?php endif; ?>
                         <td><?= $bookData['Amount']?></td>
                         <td><?php
-
                             $userSql = "SELECT * FROM users WHERE UserID = :userID";
-                            $stmt = $pdo->prepare($userSql); //iz rente dohvatam koji je user
+                            $stmt = $pdo->prepare($userSql); //iz rente dohvatam koji je username usera
                             $stmt->execute(['userID' => $row["UserID"]]);
                             $userData = $stmt->fetch();
                             echo $userData['username'];
-
-
                             ?>
                         </td>
                         <td>
-                            <!--forma za prihvatanje/odbijanje rente-->
-                            <?php if($row["Returned"] !== "Returned"){  ?>
+                    <!--Discuss various cases whether the book rent is waiting approval or denial,
+                    or whether it is approved or denied-->
                             <form action="rentsAdmin.php" method="post">
                                 <div style="display: flex">
-                                    <input type="submit" value="Approve" name="button" class="btn btn-outline-success">
-                                    &emsp;
-                                    <input type="submit" value="Decline" name="button" class="btn btn-outline-danger">
+                                    <?php if($row["Approved"] === "pending") : ?>
+                                        <input type="submit" value="Approve" name="button" class="btn btn-outline-success">&emsp;
+                                        <input type="submit" value="Decline" name="button" class="btn btn-outline-danger">
+                                    <?php else : if($row['Approved'] === 'Declined') :?>
+                                        <span style="color: red">Book rent declined</span>
+                                    <?php else : if($row['Approved'] === 'Approved') :?>
+                                        <span style="color: darkgreen">Book rent approved</span>
+                                    <?php endif; endif;  endif;?>
                                     <input type="hidden" value="<?=$row['RentID']?>" name="rentID">
                                     <input type="hidden" value="<?=$row['BookID']?>" name="bookID">
                                 </div>
                             </form>
-                            <?php } else { ?>
-                            Book returned
-                            <?php } ?>
+
+
                         </td>
                     </tr>
 
