@@ -2,7 +2,7 @@
 
 require "config.php";
 
-//session_start();
+
 
 
 $stmt = $pdo->query("SELECT 1 FROM rents");
@@ -25,17 +25,13 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
      * */
 
     $rentID = $_POST['RentID'];
+    $bookID = $_POST['BookID'];
+    $amount = $_POST['Amount'];
     $sql2 = "UPDATE rents SET Returned = 'Returned' WHERE RentID = :RentID";
     $stmt3 = $pdo->prepare($sql2);
     $stmt3->execute(['RentID' => $rentID]);
 
-    /*Prvo treba iz rente dohvatiti bookId i onda promeniti kolicinu knjiga*/
-    $sql3 = "SELECT BookID FROM rents WHERE RentID = :RentID";
-    $stmt4 = $pdo->prepare($sql3);
-    $stmt4->execute(['RentID' => $rentID]);
-    $book = $stmt4->fetch(); // $book je array sa jednim elementom
-    //var_dump($book);
-    $bookID = $book['BookID'];
+
     $sql4 = "UPDATE books SET Amount = Amount + 1 WHERE BookID = :BookID";
     $stmt5 = $pdo->prepare($sql4);
     $stmt5->execute(['BookID' => $bookID]);
@@ -64,10 +60,11 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                 ?>
 
                 <tr>
-                    <td>Title</td>
-                    <td>Author</td>
-                    <td>Approval</td>
-                    <td>Returned</td>
+                    <th>Title</th>
+                    <th>Author</th>
+                    <th>Approval</th>
+                    <th>Returned</th>
+                    <th>Status</th>
 
                 </tr>
                 <?php
@@ -88,30 +85,37 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                         <td><?= $row['Approved']?></td>
                         <td><?= $row['Returned']?></td>
                         <td>
-                            <?php
-                            //samo ako je renta odobrena i ako knjiga nije vracena, onda omoguci vracanje knjige
-                            if($row['Approved'] == "Approved" && $row['Returned'] != "Returned") {
-                            ?>
+                        <!--Discuss various cases whether a book rent is pending, declined or accepted
+                        and then waiting for it to be returned-->
                             <form action="rentsUser.php" method="post">
-                                <input type="submit" value="Return book" class="btn btn-outline-info">
+                                <?php if($row['Approved'] === 'Approved' && $row['Returned'] === '-') : ?>
+                                    <input type="submit" value="Return book" class="btn btn-outline-info">
+                                    <?php else: if($row['Returned'] === 'Returned') : ?>
+                                        <span style="color: darkgreen">Book returned</span>
+                                    <?php else: if($row['Approved'] === 'pending' && $row['Returned'] === '-') : ?>
+                                        <span style="color: darkgoldenrod">Book rent pending approval</span>
+                                        <?php else: if($row['Approved'] === 'Declined') : ?>
+                                            <span style="color: red">Book rent declined</span>
+                                        <?php endif; ?>
+                                    <?php endif; ?>
+                                    <?php endif; ?>
+                                <?php endif; ?>
+
                                 <input type="hidden" value="<?= $row['RentID']?>" name="RentID">
+                                <input type="hidden" value="<?= $row['BookID']?>" name="BookID">
+                                <input type="hidden" value="<?= $bookData['Amount']?>" name="Amount">
                             </form>
-                            <?php } else{ ?>
-                            <form action="rentsUser.php" method="get">
-                                <input type="submit" value="Rent pending, rejected or book returned" class="btn btn-outline-danger" disabled>
-                                <input type="hidden" value="<?= $row['RentID']?>" name="RentID">
-                            </form>
-                            <?php } ?>
+
+
+
                         </td>
                     </tr>
 
-                    <?php
-                }
-            } else{
-                ?>
+                <?php } ?>
+
+            <?php } else { ?>
                 <h3 style="color: red">No data</h3>
-            <?php   }
-            ?>
+            <?php } ?>
 
 
         </table>

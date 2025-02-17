@@ -3,6 +3,17 @@
 //session_start();
 require "config.php";
 
+/*
+ * Ako username nije podesen u sesiji, to znaci da nismo ulogovani i tako naznaci
+ * inace,
+ * jesmo ulogovani i tako naznaci u $loggedIn
+ * */
+
+
+if(!isset($_SESSION['username']))
+    $loggedIn = false;
+else
+    $loggedIn = true;
 
 if($_SERVER["REQUEST_METHOD"] == "POST") {
 
@@ -34,8 +45,15 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
 
         <form action="logout.php" method="post">
 
-            <input type="submit" value="Log out" class="btn btn-outline-danger">
+            <!--Samo ako sam ulogovan, omoguci korisniku da se izloguje, inace ne.-->
 
+            <?php if($loggedIn == true) :  ?>
+                <input type="submit" value="Log out" class="btn btn-outline-danger">
+            <?php else: ?>
+                <input type="submit" value="Log out" class="btn btn-outline-danger" disabled>
+            <?php endif; ?>
+            <!--TODO Stranica ne refreshuje dugme logout kao sto refreshuje dugme login u login.pho nakon
+            TODO izlogovanja(u logout.php) odnosno nakon ulogovanja(u login.php)-->
         </form>
 
     </div>

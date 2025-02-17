@@ -3,8 +3,17 @@
 
 require "config.php";
 
+/*
+ * Ako username nije podesen u sesiji, to znaci da nismo ulogovani i tako naznaci
+ * inace,
+ * jesmo ulogovani i tako naznaci u $loggedIn
+ * */
 
 
+if(!isset($_SESSION['username']))
+    $loggedIn = false;
+else
+    $loggedIn = true;
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
@@ -12,8 +21,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         onda ga treba spreciti da se uloguje opet*/
 
 
-    if(!isset($_SESSION['username'])) { //TODO NE RADI: dozvoljava logovanje iako smo vec ulogovani, za logout je reseno ako smo vec izlogovani
-//TODO Resiti session_start() funkcije
+    if(!isset($_SESSION['username'])) {
+
         $username = $_POST["username"];
         $password = $_POST["password"];
 
@@ -37,6 +46,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
                 echo "User " . htmlspecialchars($data['username']) . " is logged in. Welcome back!";
+                $loggedIn = true; // Oznaci da smo ulogovani
 
             } else {
                 echo "Wrong password! Try again!";
@@ -51,10 +61,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $pdo = null;
 
     } else{
+
         echo "Already logged in!";
     }
-} else{
-    //session_start();
 }
 
 
@@ -75,7 +84,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         <br>
 
-        <form action="login.php" method="post">
+        <form action="login.php" method="post" id="forma">
 
             <div id="greska">
 
@@ -97,7 +106,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             <br>
 
-            <input type="submit" value="Log In" class="btn btn-outline-primary">
+            <!--
+            Onemoguci korisniku da klikne dugme login ako je vec ulogovan.
+            -->
+
+            <?php if($loggedIn == false): ?>
+                <input type="submit" value="Log In" class="btn btn-outline-primary" style="width: 100%">
+            <?php else: ?>
+                <input type="submit" value="Log In" class="btn btn-outline-primary" disabled  style="width: 100%">
+            <?php endif; ?>
 
         </form>
 
@@ -105,5 +122,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 </main>
 
+<script src="bootstrap-5.3.3-dist/js/bootstrap.js"></script>
+<script src="login.js"></script>
 
 <?php require "views/partials/footer.php"?>

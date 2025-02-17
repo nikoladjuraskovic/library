@@ -1,6 +1,6 @@
 <?php
 
-//TODO Mozda ovde staviti session_start();  ???
+//PODESAVANJE SESIJE NA POCETKU SVAKE SKRIPTE
 ini_set('session.gc_maxlifetime', (60 * 60 * 24)); //duzina trajanja sesije je 1 dan
 session_start();
 if(isset($_SESSION['username'])){
