@@ -54,8 +54,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
             <?php else: ?>
                 <input type="submit" value="Log out" class="btn btn-outline-danger" disabled>
             <?php endif; ?>
-            <!--TODO Stranica ne refreshuje dugme logout kao sto refreshuje dugme login u login.php nakon
-            TODO izlogovanja(u logout.php) odnosno nakon ulogovanja(u login.php)-->
+            
         </form>
 
     </div>
