@@ -8,7 +8,7 @@ require "config.php";
  * inace,
  * jesmo ulogovani i tako naznaci u $loggedIn
  * */
-
+$loginError = "";
 
 if(!isset($_SESSION['username']))
     $loggedIn = false;
@@ -16,6 +16,7 @@ else
     $loggedIn = true;
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
 
         /*Moze se desiti da neko ko je ulogovan namerno ukuca url login strane i otvori je,
         onda ga treba spreciti da se uloguje opet*/
@@ -47,14 +48,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                 echo "User " . htmlspecialchars($data['username']) . " is logged in. Welcome back!";
                 $loggedIn = true; // Oznaci da smo ulogovani
+                $loginError = "";
+                //immediately transfer to index.php
+                header("Location: index.php");
 
             } else {
                 echo "Wrong password! Try again!";
+                $loginError = "Wrong password!";
 
             }
         } else {
             echo "Wrong username! Try again!";
-
+            $loginError = "Wrong username!";
         }
 
 
@@ -87,7 +92,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <form action="login.php" method="post" id="forma">
 
             <div id="greska">
-
+                <?php echo $loginError; ?>
             </div>
 
             <br>

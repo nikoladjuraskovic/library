@@ -27,6 +27,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
         setcookie(session_name(), '', time() - 42000, $params['path']);
         session_destroy();
         echo "You have been logged out.";
+        //immediately transfer to index.php
+        header("location: index.php");
 
     }  else{
         echo "You are not logged in.";
@@ -52,7 +54,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
             <?php else: ?>
                 <input type="submit" value="Log out" class="btn btn-outline-danger" disabled>
             <?php endif; ?>
-            <!--TODO Stranica ne refreshuje dugme logout kao sto refreshuje dugme login u login.pho nakon
+            <!--TODO Stranica ne refreshuje dugme logout kao sto refreshuje dugme login u login.php nakon
             TODO izlogovanja(u logout.php) odnosno nakon ulogovanja(u login.php)-->
         </form>
 
