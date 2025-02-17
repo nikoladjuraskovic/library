@@ -3,6 +3,11 @@
 //PODESAVANJE SESIJE NA POCETKU SVAKE SKRIPTE
 ini_set('session.gc_maxlifetime', (60 * 60 * 24)); //duzina trajanja sesije je 1 dan
 session_start();
+
+/*
+ * We display the username and role on every web page using the flash message technique
+ * */
+
 if(isset($_SESSION['username'])){
     $usernameNav = $_SESSION['username'];
     $roleNav = $_SESSION['role'];

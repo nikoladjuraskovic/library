@@ -7,13 +7,33 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     $author = $_POST["author"];
     $year = intval($_POST["year"]);
 
-    $stmt = $pdo->prepare("INSERT INTO books(title, author, year) VALUES(:title, :author, :year)");
+    $stmt = $pdo->prepare("INSERT INTO books(title, author, year, Amount) VALUES(:title, :author, :year, 1)");
     $stmt->execute(["title" => $title, "author" => $author, "year" => $year]);
 
 
     $pdo = null;
-    header("location: show.php");
+    //header("location: show.php");
 }
+
+/*POST REDIRECT GET(PRG) TECHNIQUE*/
+
+if(isset($_POST['submit']))
+{
+    $_SESSION["title"] = $_POST["title"];
+    $_SESSION["author"] = $_POST["author"];
+    $_SESSION["year"] = $_POST["year"];
+    header("Location: insert.php");
+    exit(0);
+}
+
+if(isset($_SESSION["title"]))
+{
+    unset($_SESSION["title"]);
+    unset($_SESSION["author"]);
+    unset($_SESSION["year"]);
+}
+
+
 
 $pdo = null; //zatvaranje konekcije
 
@@ -70,7 +90,7 @@ $pdo = null; //zatvaranje konekcije
                 <br>
 
                 <div class="form-group">
-                    <input type="submit" value = "Insert book" class="btn btn-success">
+                    <input type="submit" value = "Insert book" class="btn btn-success" name="submit">
                 </div>
 
 

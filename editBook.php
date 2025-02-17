@@ -44,6 +44,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
 
         $pdo = null;
 
+        //so that we cannot post multiple times in a row
         header('Location: show.php');
     }
 }
