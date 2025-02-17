@@ -54,7 +54,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
             <?php else: ?>
                 <input type="submit" value="Log out" class="btn btn-outline-danger" disabled>
             <?php endif; ?>
-            
+
         </form>
 
     </div>

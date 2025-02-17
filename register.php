@@ -2,6 +2,13 @@
 
 require "config.php";
 
+if(!isset($_SESSION['username']))
+    $loggedIn = false;
+else
+    $loggedIn = true;
+
+
+
 if($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $username = $_POST["username"];
@@ -42,7 +49,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
 
         <br>
 
-        <form action="register.php" method="post">
+        <form action="register.php" method="post"  id="forma">
 
             <div id="greska">
 
@@ -64,13 +71,18 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
 
             <br>
 
-            <input type="submit" value="Register!" class="btn btn-info">
+            <!--enable only non logged in visitors to register-->
+            <?php if($loggedIn === false ) : ?>
+                <input type="submit" value="Register!" class="btn btn-info">
+            <?php else : ?>
+                <input type="submit" value="Register!" class="btn btn-info" disabled>
+            <?php endif; ?>
 
         </form>
 
     </div>
 
 </main>
-
+<script src="register.js"></script>
 
 <?php require "views/partials/footer.php"?>
