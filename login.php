@@ -43,7 +43,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $_SESSION['username'] = $username;
                 $_SESSION['role'] = $data['role'];
                 $_SESSION['id'] = $data['UserID'];
-                $_SESSION['IP'] = $_SERVER['REMOTE_ADDR'] ?? $_SERVER["HTTP_USER_AGENT"];
+                $_SESSION['IP'] =  $_SERVER["HTTP_USER_AGENT"] ?? $_SERVER['REMOTE_ADDR'];
 
 
                 echo "User " . htmlspecialchars($data['username']) . " is logged in. Welcome back!";
