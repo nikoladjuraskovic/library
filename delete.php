@@ -5,6 +5,8 @@ require "config.php";
 if(!isset($_SESSION['username'])) //if logged out, redirect to home page
     header("Location: index.php");
 
+if($_SESSION['role'] != "admin") //if someone is not admin, then redirect
+    header("Location: index.php");
 
 $stmt = $pdo->query("SELECT 1 FROM books");
 $data = $stmt->fetch();
