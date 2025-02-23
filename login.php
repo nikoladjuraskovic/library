@@ -15,6 +15,9 @@ if(!isset($_SESSION['username']))
 else
     $loggedIn = true;
 
+if(isset($_SESSION['username'])) //if logged in, redirect to home page
+    header("Location: index.php");
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 

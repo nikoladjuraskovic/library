@@ -15,7 +15,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     $password = $_POST["password"];
 
     $hash = password_hash($password, PASSWORD_DEFAULT);
-    $role = "user";
+    $role = "user"; //change to 'admin' when you want to register an administrator
 
     $query = "INSERT INTO users (username, password, role) VALUES (:username, :hash, :role)";
 

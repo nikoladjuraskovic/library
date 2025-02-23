@@ -9,7 +9,7 @@ require "config.php";
  * jesmo ulogovani i tako naznaci u $loggedIn
  * */
 
-
+//TODO Ako nisam ulogovan redirect mene u login.php
 if(!isset($_SESSION['username']))
     $loggedIn = false;
 else
