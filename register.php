@@ -2,6 +2,10 @@
 
 require "config.php";
 
+if(isset($_SESSION['username'])) //if logged in, redirect to home page, we want to disable logged-in users to register
+    header("Location: index.php");
+
+
 if(!isset($_SESSION['username']))
     $loggedIn = false;
 else
