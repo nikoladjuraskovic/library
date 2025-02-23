@@ -1,5 +1,5 @@
 
--- heidisql database export
+-- heidisql full database export
 -- --------------------------------------------------------
 -- Host:                         127.0.0.1
 -- Server version:               8.0.30 - MySQL Community Server - GPL
