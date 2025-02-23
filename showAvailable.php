@@ -3,7 +3,10 @@
 require "config.php";
 
 
-//session_start(); //ne vidi $_SESSION ako ne stavim ovo.....
+
+
+if(!isset($_SESSION['username'])) //if logged out, redirect to home page
+    header("Location: index.php");
 
 $stmt = $pdo->query("SELECT 1 FROM Books");
 

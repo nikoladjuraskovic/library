@@ -2,7 +2,8 @@
 
 require "config.php";
 
-
+if(!isset($_SESSION['username'])) //if logged out, redirect to home page
+    header("Location: index.php");
 
 
 $stmt = $pdo->query("SELECT 1 FROM rents");
@@ -71,7 +72,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                 while($row = $stmt2->fetch()) { ?>
                     <tr>
                         <td><?php
-                            //TODO prebaciti u backend deo gore
+                            //TODO Do everything with 1 query in backend using JOIN
                             $bookSql = "SELECT * FROM books WHERE BookID = :bookID";
                             $stmt = $pdo->prepare($bookSql);
                             $stmt->execute(['bookID' => $row['BookID']]);
