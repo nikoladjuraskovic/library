@@ -2,7 +2,8 @@
 
 require "config.php";
 
-
+if(!isset($_SESSION['username'])) //if logged out, redirect to home page
+    header("Location: index.php");
 
 
 if($_SERVER["REQUEST_METHOD"] == "POST") {
