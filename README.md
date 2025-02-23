@@ -1,0 +1,1 @@
+Library web application for renting books with a user login system. Users log in to view and rent books. Every book rent has to be approved by the admin or rejected. After the rent is approved the user has to return the book. The admin can approve or decline rents as well as insert, edit or delete books from the database.
