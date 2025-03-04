@@ -28,6 +28,15 @@ $options = [
     PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
     PDO::ATTR_EMULATE_PREPARES => false,
 ];
-$pdo = new PDO($dsn, $user, $pass, $options);
+try {
+
+    $pdo = new PDO($dsn, $user, $pass, $options);
+
+} catch (Exception $e) {
+    echo 'Error Message: ' . $e->getMessage() . PHP_EOL;
+    echo 'Error Code: ' . $e->getCode() . PHP_EOL;
+    //NOTE it is better to show the user(client) just that a server error occurred
+    //and make the details visible only to the server
+}
 
 
