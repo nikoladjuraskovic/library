@@ -45,6 +45,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST')
                     $stmt = $pdo->prepare($sql);
                     $stmt->execute(["title" => $title, "author" => $author, "year" => $year, "amount" => $amount]);
                     header("Location: show.php");
+
                 }
             }
 
@@ -52,6 +53,9 @@ if($_SERVER['REQUEST_METHOD'] == 'POST')
     } else{
         $error = "Only xml and json files are allowed!";
     }
+
+    $pdo = null;
+    exit(0);
 }
 
 
