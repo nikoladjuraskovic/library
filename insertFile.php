@@ -13,29 +13,29 @@ $error = "";
 if($_SERVER['REQUEST_METHOD'] == 'POST')
 {
 
-    if($_FILES["file"]["type"] === "application/json" || $_FILES["file"]["type"] === "text/xml")
-    {
-        foreach ($_FILES["file"] as $key => $value) {
-            echo "[$key] => $value" . "<br>";
-        }
+    try {
 
-        if(file_exists("files/" . $_FILES["file"]["name"])){
-            $error = "File already exists.";
-        } else{
-
-            //upload file to folder files
-            move_uploaded_file($_FILES["file"]["tmp_name"], "files/". $_FILES["file"]["name"]);
-
-            if($_FILES["file"]["type"] === "text/xml")
-            {
-                $books = simplexml_load_file("files/" . $_FILES["file"]["name"]);
-
-            } else { // otherwise(it will always be json here)
-
-                $books_from_json = file_get_contents("files/" . $_FILES["file"]["name"]);
-                $books = json_decode($books_from_json);
+        if ($_FILES["file"]["type"] === "application/json" || $_FILES["file"]["type"] === "text/xml") {
+            foreach ($_FILES["file"] as $key => $value) {
+                echo "[$key] => $value" . "<br>";
             }
-                foreach($books as $book){
+
+            if (file_exists("files/" . $_FILES["file"]["name"])) {
+                $error = "File already exists.";
+            } else {
+
+                //upload file to folder files
+                move_uploaded_file($_FILES["file"]["tmp_name"], "files/" . $_FILES["file"]["name"]);
+
+                if ($_FILES["file"]["type"] === "text/xml") {
+                    $books = simplexml_load_file("files/" . $_FILES["file"]["name"]);
+
+                } else { // otherwise(it will always be json here)
+
+                    $books_from_json = file_get_contents("files/" . $_FILES["file"]["name"]);
+                    $books = json_decode($books_from_json);
+                }
+                foreach ($books as $book) {
                     $title = $book->title;
                     $author = $book->author;
                     $year = $book->year;
@@ -50,8 +50,15 @@ if($_SERVER['REQUEST_METHOD'] == 'POST')
             }
 
 
-    } else{
-        $error = "Only xml and json files are allowed!";
+        } else {
+            $error = "Only xml and json files are allowed!";
+        }
+
+    } catch (Exception $e) {
+        echo $e->getMessage() . "<br>";
+        echo $e->getTraceAsString() . "<br>";
+        echo $e->getCode();
+
     }
 
     $pdo = null;
