@@ -29,11 +29,22 @@ namespace Books;
             }
         }
 
-        public function __construct(string $title, string $author, int $year)
+        public int $amount {
+            get {
+                return $this->amount;
+            }
+
+            set{
+                $this->amount = $value;
+            }
+        }
+
+        public function __construct(string $title, string $author, int $year, int $amount)
         {
             $this->title = $title;
             $this->author = $author;
             $this->year = $year;
+            $this->amount = $amount;
         }
 
 

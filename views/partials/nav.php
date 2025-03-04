@@ -30,6 +30,7 @@ if(isset($_SESSION['username'])){
         <!--Only the admin can access these pages-->
         <?php if(isset($_SESSION['username']) && $_SESSION['role'] === 'admin'){ ?>
             <a href="insert.php">Insert book</a>
+            <a href="insertFile.php">Insert book file</a>
             <a href="delete.php">Delete book</a>
             <a href="edit.php">Edit books</a>
             <a href="rentsAdmin.php">Approve rents</a>

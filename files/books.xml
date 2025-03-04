@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<books>
+    <book>
+        <title>Xml naslov</title>
+        <author>Xml autor</author>
+        <year>1995</year>
+        <amount>3</amount>
+    </book>
+    <book>
+        <title>Xml naslov2</title>
+        <author>Xml autor2</author>
+        <year>1905</year>
+        <amount>5</amount>
+    </book>
+</books>
