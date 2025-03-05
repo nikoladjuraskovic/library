@@ -14,7 +14,11 @@ $stmt = $pdo->query("SELECT 1 FROM rents");
 $data = $stmt->fetch();
 
 $userID = $_SESSION['id']; //dohvatimo ko je ulogovani korisnik
-$sql = "SELECT * FROM rents"; //dohvatamo sve rente jer sam admin
+//$sql = "SELECT * FROM rents"; //dohvatamo sve rente jer sam admin
+$sql = "SELECT RentID, rents.BookID, rents.UserID, Approved, Returned,
+        Title, Author, Amount, username FROM rents
+        JOIN books ON books.BookID = rents.BookID
+        JOIN users ON users.UserID = rents.UserID;";
 $stmt2 = $pdo->query($sql);
 
 if($_SERVER["REQUEST_METHOD"] == "POST"){
@@ -93,16 +97,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                 <?php
                 while($row = $stmt2->fetch()) { ?>
                     <tr>
-                        <td><?php
-                            //TODO prebaciti u backend deo gore
-                            $bookSql = "SELECT * FROM books WHERE BookID = :bookID";
-                            $stmt = $pdo->prepare($bookSql);
-                            $stmt->execute(['bookID' => $row['BookID']]);
-                            $bookData = $stmt->fetch();
-                            echo $bookData['Title'];
-                            ?>
-                        </td>
-                        <td><?= $bookData['Author']?></td>
+                        <td><?=$row['Title']?></td>
+                        <td><?= $row['Author']?></td>
                         <td><?= $row['Approved']?></td>
                         <!--Mark red to admin if a book is approved and not returned yet-->
                         <?php if($row['Approved'] === 'Approved' && $row['Returned'] === '-') : ?>
@@ -110,15 +106,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                         <?php else : ?> <!--otherwise, print from database-->
                             <td><?= $row['Returned']?></td>
                         <?php endif; ?>
-                        <td><?= $bookData['Amount']?></td>
-                        <td><?php
-                            $userSql = "SELECT * FROM users WHERE UserID = :userID";
-                            $stmt = $pdo->prepare($userSql); //iz rente dohvatam koji je username usera
-                            $stmt->execute(['userID' => $row["UserID"]]);
-                            $userData = $stmt->fetch();
-                            echo $userData['username'];
-                            ?>
-                        </td>
+                        <td><?= $row['Amount']?></td>
+                        <td><?= $row['username']?></td>
                         <td>
                     <!--Discuss various cases whether the book rent is waiting approval or denial,
                     or whether it is approved or denied-->

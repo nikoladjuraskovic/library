@@ -11,7 +11,9 @@ $stmt = $pdo->query("SELECT 1 FROM rents");
 $data = $stmt->fetch();
 
 $userID = $_SESSION['id']; //dohvatimo ko je ulogovani korisnik
-$sql = "SELECT * FROM rents WHERE UserID = :userID";
+
+$sql = "SELECT RentID, rents.BookID, UserID, Approved, Returned, Title, Author, Amount FROM rents 
+            JOIN books ON books.BookID = rents.BookID WHERE UserID = :userID";
 $stmt2 = $pdo->prepare($sql);
 $stmt2->execute(['userID' => $userID]);
 
@@ -71,21 +73,13 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                 <?php
                 while($row = $stmt2->fetch()) { ?>
                     <tr>
-                        <td><?php
-                            //TODO Do everything with 1 query in backend using JOIN
-                            $bookSql = "SELECT * FROM books WHERE BookID = :bookID";
-                            $stmt = $pdo->prepare($bookSql);
-                            $stmt->execute(['bookID' => $row['BookID']]);
-                            $bookData = $stmt->fetch();
-                            echo $bookData['Title'];
-                            ?>
-                        </td>
-                        <td><?= $bookData['Author']?></td>
+                        <td><?= $row['Title'];?></td>
+                        <td><?= $row['Author']?></td>
                         <td><?= $row['Approved']?></td>
                         <td><?= $row['Returned']?></td>
                         <td>
                         <!--Discuss various cases whether a book rent is pending, declined or accepted
-                        and then waiting for it to be returned-->
+                        and then wait for it to be returned-->
                             <form action="rentsUser.php" method="post">
                                 <?php if($row['Approved'] === 'Approved' && $row['Returned'] === '-') : ?>
                                     <input type="submit" value="Return book" class="btn btn-outline-info">
@@ -102,10 +96,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 
                                 <input type="hidden" value="<?= $row['RentID']?>" name="RentID">
                                 <input type="hidden" value="<?= $row['BookID']?>" name="BookID">
-                                <input type="hidden" value="<?= $bookData['Amount']?>" name="Amount">
+                                <input type="hidden" value="<?= $row['Amount']?>" name="Amount">
                             </form>
-
-
 
                         </td>
                     </tr>
