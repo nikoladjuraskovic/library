@@ -79,7 +79,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 
         <br>
 
-        <form action="rentsAdminPdf.php" method="get" target="_blank">
+        <form action="rentsAdminPdf.php" method="post" target="_blank">
             <input type="submit" name="submit" value="Export to pdf" class="btn btn-danger">
         </form>
         

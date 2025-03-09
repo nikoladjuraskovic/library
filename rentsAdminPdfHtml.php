@@ -1,7 +1,8 @@
 <?php
 
 
-require_once "config.php";
+require_once "config.php"; //if we put require errors come out, because
+//config.php was already included in retnsAdminPdf.php
 
 if(!isset($_SESSION['username'])) //if logged out, redirect to home page
     header("Location: index.php");
@@ -32,19 +33,12 @@ $stmt2 = $pdo->query($sql);
     table, th, td{
         border: 2px solid #564b4b;
         border-collapse: collapse;
-        /*background-color: aliceblue;*/
+
     }
 
     th, td{
         padding: 5px 5px;
     }
-
-    /*
-    tr:nth-child(even) td{
-        background-color: lightsteelblue;
-    }
-    */
-
 
     .container {
         width: 80%;
@@ -55,11 +49,9 @@ $stmt2 = $pdo->query($sql);
 
 </style>
 
-
-
 <div class="container">
 
-<h2>Rented books Approvals Report</h2>
+<h2>Rented books Approvals <?=$_SESSION['username']?> Report</h2>
 
 <br>
 
@@ -95,22 +87,16 @@ $stmt2 = $pdo->query($sql);
                 <td>
                     <!--Discuss various cases whether the book rent is waiting approval or denial,
                     or whether it is approved or denied-->
-                    <form action="rentsAdmin.php" method="post">
                         <div style="display: flex">
                             <?php if($row["Approved"] === "pending") : ?>
-                                <input type="submit" value="Approve" name="button" class="btn btn-outline-success">&emsp;
-                                <input type="submit" value="Decline" name="button" class="btn btn-outline-danger">
+                                <span style="color: darkorange">Book rent pending admin decision</span>
                             <?php else : if($row['Approved'] === 'Declined') :?>
                                 <span style="color: red">Book rent declined</span>
                             <?php else : if($row['Approved'] === 'Approved') :?>
                                 <span style="color: darkgreen">Book rent approved</span>
                             <?php endif; endif;  endif;?>
-                            <input type="hidden" value="<?=$row['RentID']?>" name="rentID">
-                            <input type="hidden" value="<?=$row['BookID']?>" name="bookID">
+
                         </div>
-                    </form>
-
-
                 </td>
             </tr>
 
@@ -125,6 +111,6 @@ $stmt2 = $pdo->query($sql);
 
 </table>
 
-    <h4>Library &copy; <?= date("d.m.Y H:i\h") ?>  </h4>
+    <h4>Library-<?=$_SESSION['username']?> &copy; <?= date("d.m.Y. H:i\h") ?>  </h4>
 
 </div>
