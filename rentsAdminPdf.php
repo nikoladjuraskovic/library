@@ -17,7 +17,7 @@ require "dompdf/autoload.inc.php";
 try {
 
     $dompdf = new Dompdf();
-
+//https://stackoverflow.com/questions/50695307/render-html-with-dynamic-variable-values-with-dompdf
     ob_start();
     require "rentsAdminPdfHtml.php";
     $html = ob_get_contents();
@@ -29,7 +29,7 @@ try {
 
     $dompdf->render();
 
-    $filename = $_SESSION['username'] . "-rents-report" . date("d.m.Y-H:i") . "pdf";
+    $filename = $_SESSION['username'] . "-rents-report" . date("d.m.Y-H:i");
 
     $dompdf->stream($filename, array("Attachment" => false));
 

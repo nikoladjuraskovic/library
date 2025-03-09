@@ -25,7 +25,7 @@ try {
 
     $dompdf->render();
 
-    $filename = $_SESSION['username'] . "-rents-report" . date("d.m.Y-H:i") . "pdf";
+    $filename = $_SESSION['username'] . "-rents-report" . date("d.m.Y-H:i");
 
     $dompdf->stream($filename, array("Attachment" => false));
 
